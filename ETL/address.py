@@ -25,7 +25,7 @@ df = pd.read_excel(f"{directory_path}\\{input_file_name}")
 columns_to_drop = ['updated', 'address2', 'firstname', 'lastname']
 df = df.drop(columns=columns_to_drop)
 
-# Drop NaN values
+# Drop NaN 
 df = df.dropna()
 
 # Clean 'zip' column
@@ -34,7 +34,7 @@ df['zip'] = df['zip'].apply(lambda x: ''.join(filter(str.isdigit, str(x))))
 # Remove rows with blank zipcode
 df = remove_rows_with_blank_zipcode(df)
 
-# Sort DataFrame by 'city'
+# Sort  by 'city'
 df = df.sort_values(by='city')
 
 # Convert 'created' to datetime
@@ -44,21 +44,19 @@ df['created'] = pd.to_datetime(df['created'])
 df['date'] = df['created'].dt.strftime('%Y-%m-%d')
 df['time'] = df['created'].dt.strftime('%H:%M:%S.%f%z')
 
-# Drop the original 'created' column
+
 df = df.drop(columns=['created'])
 
-# Display the cleaned DataFrame
+
 print("\nCleaned DataFrame:")
 print(df)
 
-# Define PostgreSQL connection details
 postgres_url = 'postgresql://postgres:farah@127.0.0.1:5432/ETL'
-table_name = 'address'  # Replace 'YourTableName' with the desired table name
+table_name = 'address' 
 
 # Load data into PostgreSQL
 load_data_to_postgres(df, table_name, postgres_url)
 
-# Save the cleaned DataFrame to a new Excel file
 output_excel_path = r'C:\Users\user\OneDrive\Bureau\webshop-data\addresses_test.xlsx'
 df.to_excel(output_excel_path, index=False)
 
