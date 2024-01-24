@@ -1,5 +1,4 @@
 import pandas as pd
-import seaborn as sns
 
 directory_path = "C:\\Users\\user\\OneDrive\\Bureau\\webshop-data"
 input_file_name = "colors.xlsx"
